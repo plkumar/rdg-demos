@@ -1,18 +1,18 @@
 import React, { useState, setState } from "react";
 import ReactDOM from "react-dom";
 import ReactDataGrid from "react-data-grid";
-import { Menu } from "react-data-grid-addons";
+import { Menu, DraggableHeader, DraggableContainer } from "react-data-grid-addons";
 import createRowData, { createFakeRow } from "./createRowData";
 import { MyRowHeader } from "./MyRowHeader"
-import {ExampleContextMenu} from "./ExampleContextMenu"
+import { ExampleContextMenu } from "./ExampleContextMenu"
 import "./styles.css";
 
 const { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } = Menu;
-
 const defaultColumnProperties = {
   sortable: true,
-  resizable:true,
+  resizable: true,
   filterable: true,
+  // draggable: true,
   width: 120
 };
 
@@ -96,29 +96,56 @@ const sortRows = (initialRows, sortColumn, sortDirection) => (rows) => {
   return sortDirection === "NONE" ? initialRows : [...rows].sort(comparer);
 };
 
+function onHeaderDrop(source, target) {
+  // const stateCopy = Object.assign({}, this.state);
+  // const columnSourceIndex = this.state.columns.findIndex(
+  //   i => i.key === source
+  // );
+  // const columnTargetIndex = this.state.columns.findIndex(
+  //   i => i.key === target
+  // );
+
+  // stateCopy.columns.splice(
+  //   columnTargetIndex,
+  //   0,
+  //   stateCopy.columns.splice(columnSourceIndex, 1)[0]
+  // );
+
+  // const emptyColumns = Object.assign({}, this.state, { columns: [] });
+  // this.setState(emptyColumns);
+
+  // const reorderedColumns = Object.assign({}, this.state, {
+  //   columns: stateCopy.columns
+  // });
+  // this.setState(reorderedColumns);
+};
+
 function Example({ initialRows }) {
   const [rows, setRows] = useState(initialRows);
-  return (
-    <div>
-    <ReactDataGrid
-      columns={columns}
-      rowGetter={(i) => rows[i]}
-      rowsCount={ROW_COUNT}
-      minHeight={500}
-      onGridSort={(sortColumn, sortDirection) =>
-        setRows(sortRows(initialRows, sortColumn, sortDirection))
-      }
-      contextMenu={
-        <ExampleContextMenu
-          onRowDelete={(e, { rowIdx }) => setRows(deleteRow(rowIdx))}
-          onRowInsertAbove={(e, { rowIdx }) => setRows(insertRow(rowIdx))}
-          onRowInsertBelow={(e, { rowIdx }) => setRows(insertRow(rowIdx + 1))}
-        />
-      }
-      RowsContainer={ContextMenuTrigger}
-    />
 
-    </div>
+  return (
+    // <DraggableContainer onHeaderDrop={onHeaderDrop}>
+      <ReactDataGrid
+        columns={columns}
+        rowGetter={(i) => rows[i]}
+        rowsCount={ROW_COUNT}
+        minHeight={500}
+        onGridSort={(sortColumn, sortDirection) =>
+          setRows(sortRows(initialRows, sortColumn, sortDirection))
+        }
+        contextMenu={
+          <ExampleContextMenu
+            onRowDelete={(e, { rowIdx }) => setRows(deleteRow(rowIdx))}
+            onRowInsertAbove={(e, { rowIdx }) => setRows(insertRow(rowIdx))}
+            onRowInsertBelow={(e, { rowIdx }) => setRows(insertRow(rowIdx + 1))}
+          />
+        }
+        onColumnResize={(idx, width) =>
+          console.log(`Column ${idx} has been resized to ${width}`)
+        }
+        RowsContainer={ContextMenuTrigger}
+      />
+    // </DraggableContainer>
   );
 }
 

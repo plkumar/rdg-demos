@@ -1,6 +1,6 @@
-import React, { useState, setState } from "react";
+import React from "react";
 import { Menu } from "react-data-grid-addons";
-const { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } = Menu;
+const { ContextMenu, MenuItem, SubMenu } = Menu;
 
 export function ExampleContextMenu({
     idx,
