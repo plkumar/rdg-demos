@@ -34,9 +34,21 @@ function FirstRowHeader({value}){
     console.log(e);
   };
 
-
   return (
-    <div ><input type="checkbox" onClick={onHeaderClick} /></div>
+    <div>
+                <ContextMenuTrigger id="HEADER_SELECTOR">
+                <div ><input type="checkbox" onClick={onHeaderClick} /></div>
+                </ContextMenuTrigger>
+                <ContextMenu id={`HEADER_SELECTOR`}>
+                    <MenuItem  >
+                        Sort Ascending
+                    </MenuItem>
+                    <MenuItem  >
+                        Sort Descending
+                    </MenuItem>
+                </ContextMenu>
+            </div>
+    
   );
 }
 
@@ -46,7 +58,7 @@ const columns = [
     name: "Select",
     sortDescendingFirst: true,
     formatter: RowSelectFormatter,
-    headerRenderer: <FirstRowHeader />
+    headerRenderer: <FirstRowHeader />, 
   },
   {
     key: "id",
