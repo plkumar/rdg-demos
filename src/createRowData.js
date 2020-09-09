@@ -3,6 +3,7 @@ import faker from "faker";
 export function createFakeRow(index) {
   return {
     id: index,
+    selected:faker.random.boolean(),
     avartar: faker.image.avatar(),
     county: faker.address.county(),
     email: faker.internet.email(),

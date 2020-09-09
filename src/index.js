@@ -16,16 +16,36 @@ const defaultColumnProperties = {
   width: 120
 };
 
+function MyDraggableCell ()
+{
+  return(
+    <div>
+      Test
+    </div>
+  )
+}
+
+function RowSelectFormatter ({ value }) {
+  return <input type="checkbox" id="isSelected" checked={value} />;
+};
+
 const columns = [
+  {
+    key: "selected",
+    name: "Select",
+    sortDescendingFirst: true,
+    formatter: RowSelectFormatter 
+  },
   {
     key: "id",
     name: "ID",
-    sortDescendingFirst: true
+    sortDescendingFirst: true,
   },
   {
     key: "title",
     name: "Title",
-    headerRenderer: <MyRowHeader />
+    headerRenderer: <MyRowHeader />,
+    draggableHeaderCell: <MyDraggableCell />
   },
   {
     key: "firstName",
@@ -124,7 +144,7 @@ function Example({ initialRows }) {
   const [rows, setRows] = useState(initialRows);
 
   return (
-    // <DraggableContainer onHeaderDrop={onHeaderDrop}>
+    //<DraggableContainer onHeaderDrop={onHeaderDrop}>
       <ReactDataGrid
         columns={columns}
         rowGetter={(i) => rows[i]}
@@ -145,7 +165,7 @@ function Example({ initialRows }) {
         }
         RowsContainer={ContextMenuTrigger}
       />
-    // </DraggableContainer>
+    //</DraggableContainer>
   );
 }
 
