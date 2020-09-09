@@ -12,7 +12,6 @@ const defaultColumnProperties = {
   sortable: true,
   resizable: true,
   filterable: true,
-  // draggable: true,
   width: 120
 };
 
@@ -29,12 +28,25 @@ function RowSelectFormatter ({ value }) {
   return <input type="checkbox" id="isSelected" checked={value} />;
 };
 
+function FirstRowHeader({value}){
+  let onHeaderClick = (e)=>{
+    e.stopPropagation();
+    console.log(e);
+  };
+
+
+  return (
+    <div ><input type="checkbox" onClick={onHeaderClick} /></div>
+  );
+}
+
 const columns = [
   {
     key: "selected",
     name: "Select",
     sortDescendingFirst: true,
-    formatter: RowSelectFormatter 
+    formatter: RowSelectFormatter,
+    headerRenderer: <FirstRowHeader />
   },
   {
     key: "id",
